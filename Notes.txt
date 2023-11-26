@@ -1,0 +1,86 @@
+=============Списки================
+motorcycles = []
+
+
+=========Добавление в список=======
+motorcycles = ['honda', 'yamaha', 'suzuki']
+print(motorcycles)
+motorcycles.append('ducati')
+
+
+=========Вставка в список==========
+motorcycles = ['honda', 'yamaha', 'suzuki']
+motorcycles.insert(0, 'ducati')
+print(motorcycles)
+
+
+=========Удаление по номеру из списка========
+motorcycles = ['honda', 'yamaha', 'suzuki']
+print(motorcycles)
+del motorcycles[0]
+print(motorcycles)
+
+
+=========Удалить последний элемент и сохранить его=====
+motorcycles = ['honda', 'yamaha', 'suzuki']
+print(motorcycles)
+popped_motorcycle = motorcycles.pop()
+print(motorcycles)
+print(popped_motorcycle)
+
+motorcycles = ['honda', 'yamaha', 'suzuki']
+first_owned = motorcycles.pop(0)
+print('The first motorcycle I owned was a ' + first_owned.title() + '.')
+
+
+=========Удалить элемент по значению (remove удаляет только первое вхождение)=====
+motorcycles = ['honda', 'yamaha', 'suzuki', 'ducati']
+print(motorcycles)
+motorcycles.remove('ducati')
+print(motorcycles)
+
+
+=========Сортировка по алфавиту=========
+cars = ['bmw', 'audi', 'toyota', 'subaru']
+cars.sort()
+print(cars)
+
+
+=========Сортировка в обратном алфавитном порядке=========
+cars = ['bmw', 'audi', 'toyota', 'subaru']
+cars.sort(reverse=True)
+print(cars)
+
+
+=========Временная сортировка===============
+cars = ['bmw', 'audi', 'toyota', 'subaru']
+print("Here is the original list:")
+print(cars)
+
+print("\nHere is the sorted list:")
+print(sorted(cars))
+
+
+===========Вывод списка в обратном порядке===========
+cars = ['bmw', 'audi', 'toyota', 'subaru']
+print(cars)
+cars.reverse()
+print(cars)ы
+
+
+=============Определение длины списка=================
+cars = ['bmw', 'audi', 'toyota', 'subaru']
+len(cars)
+
+==============Установка и подготовка DJANGO======================
+pip install django
+django-admin startproject webapp
+python manage.py runserver
+
+
+
+
+
+
+
+
