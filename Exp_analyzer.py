@@ -76,18 +76,19 @@ while len(T_mas) < L:
     buf = 0                                        #сбросить значение gi перед циклом
     mas.clear()                                    #почистить список gi
     mas.append(0)                                  #g0 = 0
-    while mas[i-1] < h:
+    while buf < h:
         ravn = geek.random.rand(1)                 #список из одного элемента с равномерным распредлением
         r = ravn[0]                                #извлечь элемент из списка
-        x = (-1/k)*math.log1p(r)                   #xi = (-1/лямбда)*ln(ri)
-        delta = math.log1p(k1/k0)-(k1-k0)*x        #deltagi = ln(лямбда1/лямбда0) - (лямбда1-лямбда0)*xi
-        buf = g + delta                            #gi = g(i-1)+deltagi
+        print('r',i,':',r)
+        x = (-1/k)*math.log(r)                   #xi = (-1/лямбда)*ln(ri)
+        delta = math.log(k1/k0)-(k1-k0)*x        #deltagi = ln(лямбда1/лямбда0) - (лямбда1-лямбда0)*xi
+        buf = mas[-1] + delta                      #gi = g(i-1)+deltagi
         if buf >= 0:                               #условие добавления в список
             mas.append(buf)
         else:
             mas.append(0)
         i = i + 1
-        if mas[i-1] >= h:                               #условие добавления в список
+        if mas[-1] >= h:                               #условие добавления в список
             mas_buf = mas
             mas_buf.pop()
             print("Список из gi номер", len(T_mas), ":", mas_buf)
