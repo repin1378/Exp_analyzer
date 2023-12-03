@@ -2,6 +2,7 @@ import math
 
 import numpy as geek
 import sys
+from datetime import datetime
 
 #==========================Переменные========================
 
@@ -15,6 +16,11 @@ L = 0   #выборка
 k =0    #лябда в эксп распределении
 #=============================================================
 
+current_datetime = datetime.now()
+print('Запуск программы:',current_datetime)
+data_str = current_datetime.strftime("%d-%m-%Y_%H-%M-%S")
+file_name = 'result_' + data_str + '.txt'
+file = open(file_name, "w")
 
 #==========================Консольный ввод и проверка========================
 
@@ -51,7 +57,7 @@ if L <= 0:
     sys.exit("Перезапустите программу и введите корректное значение")
 
 #Ввод k и проверка
-k = float(input("Введите интенсивность:"))
+k = float(input("Введите лямбда:"))
 
 if k <= 0:
     print("Лямбда должна быть больше или равна 0")
@@ -59,11 +65,32 @@ if k <= 0:
 
 #============================================================================
 print ("НАЧАЛО РАСЧЕТА:")
-print("Лямбда 0:", k0)
-print("Лямбда 1:", k1)
-print("Решающий порог:", h)
-print("Длина выборки:", L)
-print("Лямбда:", L)
+file.write("НАЧАЛО РАСЧЕТА:\n")
+
+print("Лямбда 0: ", k0)
+k0_str = str(k0)
+k0_out = "Лямбда 0: " + k0_str + "\n"
+file.write(k0_out)
+
+print("Лямбда 1: ", k1)
+k1_str = str(k1)
+k1_out = "Лямбда 1: " + k1_str + "\n"
+file.write(k1_out)
+
+print("Решающий порог: ", h)
+h_str = str(h)
+h_out = "Решающий порог: " + h_str + "\n"
+file.write(h_out)
+
+print("Длина выборки: ", L)
+L_str = str(L)
+L_out = "Длина выборки: " + L_str + "\n"
+file.write(L_out)
+
+print("Лямбда: ", k)
+k_str = str(k)
+k_out = "Лямбда: " + k_str + "\n"
+file.write(k_out)
 #===============================Генерация временного ряда=====================
 
 T = 0
@@ -79,23 +106,34 @@ while len(T_mas) < L:
     while buf < h:
         ravn = geek.random.rand(1)                 #список из одного элемента с равномерным распредлением
         r = ravn[0]                                #извлечь элемент из списка
-        print('r',i,':',r)
-        x = (-1/k)*math.log(r)                   #xi = (-1/лямбда)*ln(ri)
-        delta = math.log(k1/k0)-(k1-k0)*x        #deltagi = ln(лямбда1/лямбда0) - (лямбда1-лямбда0)*xi
-        buf = mas[-1] + delta                      #gi = g(i-1)+deltagi
-        if buf >= 0:                               #условие добавления в список
+        print('r[',i+1,']:',r)
+        i_str = str(i+1)
+        r_str = str(r)
+        r_out = "r[" + i_str + "]: " + r_str + "\n"
+        file.write(r_out)
+        x = (-1/k)*math.log(r)                      #xi = (-1/лямбда)*ln(ri)
+        delta = math.log(k1/k0)-(k1-k0)*x           #deltagi = ln(лямбда1/лямбда0) - (лямбда1-лямбда0)*xi
+        buf = mas[-1] + delta                       #gi = g(i-1)+deltagi
+        if buf >= 0:                                #условие добавления в список
             mas.append(buf)
         else:
             mas.append(0)
         i = i + 1
-        if mas[-1] >= h:                               #условие добавления в список
+        if mas[-1] >= h:                            #условие добавления в список
             mas_buf = mas
             mas_buf.pop()
-            print("Список из gi номер", len(T_mas), ":", mas_buf)
+            print("Список из gi номер", len(T_mas)+1, ":", mas_buf)
+            len_str = str(len(T_mas)+1)
+            mas_str = str(mas_buf)
+            mas_out = "Список из gi номер " + len_str + " :" + mas_str + "\n"
+            file.write(mas_out)
     T = len(mas)
     T_mas.append(T)
     summ = summ + T
 print("Список из Tj:", T_mas)
+T_str = str(T_mas)
+T_out = "Список из Tj: " + T_str + "\n"
+file.write(T_out)
 
 #=====================================================================================
 
@@ -104,20 +142,31 @@ print("Список из Tj:", T_mas)
 #==================Обработка результатов (мат ожидание и дисперсия)===================
 T_grade = summ/L
 print("Мат ожидание:", T_grade)
+T_grade_str = str(T_grade)
+T_grade_out = "Мат ожидание: " + T_grade_str + "\n"
+file.write(T_grade_out)
 
 s = 0
 summ_dif = 0
+
 for s in T_mas:
-    summ_dif = s**2 - T_grade**2
+    dif = s**2 - T_grade**2
+    summ_dif = summ_dif + dif
 
 Q_grade = summ_dif/L
-print("Дисперсия:", T_grade)
+print("Дисперсия:", Q_grade)
+Q_grade_str = str(Q_grade)
+Q_grade_out = "Дисперсия: " + Q_grade_str + "\n"
+file.write(Q_grade_out)
 
 q_grade = Q_grade/(L**(0.5))
-print("Мат отклонение:", T_grade)
+print("Мат отклонение:", q_grade)
+q_grade_str = str(q_grade)
+q_grade_out = "Мат отклонение: " + q_grade_str + "\n"
+file.write(q_grade_out)
 
 #=====================================================================================
-
+file.close()
 
 
 
