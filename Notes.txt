@@ -78,6 +78,12 @@ django-admin startproject webapp
 python manage.py runserver
 
 
+=============Поправки=================
+лямда > 0
+h > 0
+L - количество повторных запусков > 0
+Последнее gi учитывается
+
 
 
 
