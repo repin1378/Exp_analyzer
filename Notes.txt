@@ -78,11 +78,12 @@ django-admin startproject webapp
 python manage.py runserver
 
 
-=============Поправки=================
-лямда > 0
-h > 0
-L - количество повторных запусков > 0
-Последнее gi учитывается
+==============Git управление ветками==============================
+git branch <name of new branch>     #Создать ветку
+git checkout <name of branch>       #Перейти на новую ветку
+git branch                          #Список веток
+git merge <name of merged branch>   #Слияние веток
+
 
 
 
