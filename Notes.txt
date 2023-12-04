@@ -85,6 +85,11 @@ git branch                          #Список веток
 git merge <name of merged branch>   #Слияние веток
 git push --set-upstream origin test #Для push новой ветки
 
+Слияние веток
+git checkout m
+git pull
+git pull origin marys-feature
+git push
 
 
 
