@@ -83,6 +83,7 @@ git branch <name of new branch>     #Создать ветку
 git checkout <name of branch>       #Перейти на новую ветку
 git branch                          #Список веток
 git merge <name of merged branch>   #Слияние веток
+git push --set-upstream origin test #Для push новой ветки
 
 
 

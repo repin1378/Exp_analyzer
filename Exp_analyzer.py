@@ -95,6 +95,7 @@ file.write(k_out)
 
 T = 0
 summ = 0
+summx2 = 0
 T_mas = []
 mas = []                                           #список gi
 while len(T_mas) < L:
@@ -129,6 +130,7 @@ while len(T_mas) < L:
     T = len(mas)
     T_mas.append(T)
     summ = summ + T
+    summx2 = summx2 + T**2
 print("Список из Tj:", T_mas)
 T_str = str(T_mas)
 T_out = "Список из Tj: " + T_str + "\n"
@@ -145,14 +147,8 @@ T_grade_str = str(T_grade)
 T_grade_out = "Мат ожидание: " + T_grade_str + "\n"
 file.write(T_grade_out)
 
-s = 0
-summ_dif = 0
-
-for s in T_mas:
-    dif = s**2 - T_grade**2
-    summ_dif = summ_dif + dif
-
-Q_grade = summ_dif/L
+Q_buff = summx2/L
+Q_grade = Q_buff - T_grade**2
 print("Дисперсия:", Q_grade)
 Q_grade_str = str(Q_grade)
 Q_grade_out = "Дисперсия: " + Q_grade_str + "\n"
