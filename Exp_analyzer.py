@@ -107,11 +107,11 @@ while len(T_mas) < L:
     while buf < h:
         ravn = geek.random.rand(1)                 #список из одного элемента с равномерным распредлением
         r = ravn[0]                                #извлечь элемент из списка
-        print('r[',i+1,']:',r)
+        #print('r[',i+1,']:',r)
         i_str = str(i+1)
         r_str = str(r)
         r_out = "r[" + i_str + "]: " + r_str + "\n"
-        file.write(r_out)
+        #file.write(r_out)
         x = (-1/k)*math.log(r)                      #xi = (-1/лямбда)*ln(ri)
         delta = math.log(k1/k0)-(k1-k0)*x           #deltagi = ln(лямбда1/лямбда0) - (лямбда1-лямбда0)*xi
         buf = mas[-1] + delta                       #gi = g(i-1)+deltagi
@@ -122,19 +122,19 @@ while len(T_mas) < L:
         i = i + 1
         if mas[-1] >= h:                            #условие добавления в список
             mas_buf = mas
-            print("Список из gi номер", len(T_mas)+1, ":", mas_buf)
+            #print("Список из gi номер", len(T_mas)+1, ":", mas_buf)
             len_str = str(len(T_mas)+1)
             mas_str = str(mas_buf)
             mas_out = "Список из gi номер " + len_str + " :" + mas_str + "\n"
-            file.write(mas_out)
+            #file.write(mas_out)
     T = len(mas)
     T_mas.append(T)
     summ = summ + T
     summx2 = summx2 + T**2
-print("Список из Tj:", T_mas)
+#print("Список из Tj:", T_mas)
 T_str = str(T_mas)
 T_out = "Список из Tj: " + T_str + "\n"
-file.write(T_out)
+#file.write(T_out)
 
 #=====================================================================================
 
