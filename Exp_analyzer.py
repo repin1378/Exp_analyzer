@@ -3,6 +3,7 @@ import math
 import numpy as geek
 import sys
 from datetime import datetime
+import pandas as pd
 
 #==========================Переменные========================
 
@@ -20,6 +21,7 @@ current_datetime = datetime.now()
 print('Запуск программы:',current_datetime)
 data_str = current_datetime.strftime("%d-%m-%Y_%H-%M-%S")
 file_name = 'result_' + data_str + '.txt'
+excel_name = 'result_' + data_str + '.xlsx'
 file = open(file_name, "w")
 
 #==========================Консольный ввод и проверка========================
@@ -63,6 +65,13 @@ if k <= 0:
     print("Лямбда должна быть больше 0")
     sys.exit("Перезапустите программу и введите корректное значение")
 
+#Ввод ограничения на gi
+g_max = int(input("Введите ограничение на gi:"))
+
+if g_max <= 0:
+    print("Ограничение на gi должна быть больше 0")
+    sys.exit("Перезапустите программу и введите корректное значение")
+
 #============================================================================
 print ("НАЧАЛО РАСЧЕТА:")
 file.write("НАЧАЛО РАСЧЕТА:\n")
@@ -91,6 +100,11 @@ print("Лямбда: ", k)
 k_str = str(k)
 k_out = "Лямбда: " + k_str + "\n"
 file.write(k_out)
+
+print("Ограничение на gi: ", g_max)
+g_max_str = str(g_max)
+g_max_out = "Ограничение на gi: " + g_max_str + "\n"
+file.write(g_max_out)
 #===============================Генерация временного ряда=====================
 
 T = 0
@@ -98,21 +112,27 @@ summ = 0
 summx2 = 0
 T_mas = []
 mas = []                                           #список gi
+r_mas = []
+x_mas = []
 while len(T_mas) < L:
+    r_mas.clear()
+    x_mas.clear()
     i = 0
     g = 0                                          #g0 = 0
     buf = 0                                        #сбросить значение gi перед циклом
     mas.clear()                                    #почистить список gi
     mas.append(0)                                  #g0 = 0
-    while buf < h:
+    while buf < h and len(mas) <= g_max:
         ravn = geek.random.rand(1)                 #список из одного элемента с равномерным распредлением
         r = ravn[0]                                #извлечь элемент из списка
-        #print('r[',i+1,']:',r)
+        r_mas.append(r)
+        print('r[',i+1,']:',r)
         i_str = str(i+1)
         r_str = str(r)
         r_out = "r[" + i_str + "]: " + r_str + "\n"
-        #file.write(r_out)
+        file.write(r_out)
         x = (-1/k)*math.log(r)                      #xi = (-1/лямбда)*ln(ri)
+        x_mas.append(x)
         delta = math.log(k1/k0)-(k1-k0)*x           #deltagi = ln(лямбда1/лямбда0) - (лямбда1-лямбда0)*xi
         buf = mas[-1] + delta                       #gi = g(i-1)+deltagi
         if buf >= 0:                                #условие добавления в список
@@ -120,21 +140,30 @@ while len(T_mas) < L:
         else:
             mas.append(0)
         i = i + 1
-        if mas[-1] >= h:                            #условие добавления в список
+        if mas[-1] >= h or len(mas)-1 >= g_max:                            #условие добавления в список
             mas_buf = mas
-            #print("Список из gi номер", len(T_mas)+1, ":", mas_buf)
+            print("Список из gi номер", len(T_mas)+1, ":", mas_buf)
             len_str = str(len(T_mas)+1)
             mas_str = str(mas_buf)
             mas_out = "Список из gi номер " + len_str + " :" + mas_str + "\n"
-            #file.write(mas_out)
+            file.write(mas_out)
     T = len(mas)
     T_mas.append(T)
     summ = summ + T
     summx2 = summx2 + T**2
-#print("Список из Tj:", T_mas)
+    r_mas.insert(0,0)
+    x_mas.insert(0,0)
+    data = {
+        'Ravn': r_mas,
+        'Exp': x_mas,
+        'Resh': mas_buf
+    }
+    df = pd.DataFrame(data)
+    df.to_excel(excel_name, index=False)
+print("Список из Tj:", T_mas)
 T_str = str(T_mas)
 T_out = "Список из Tj: " + T_str + "\n"
-#file.write(T_out)
+file.write(T_out)
 
 #=====================================================================================
 
