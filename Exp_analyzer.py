@@ -114,9 +114,11 @@ T_mas = []
 mas = []                                           #список gi
 r_mas = []
 x_mas = []
+delta_mas = []
 while len(T_mas) < L:
     r_mas.clear()
     x_mas.clear()
+    delta_mas.clear()
     i = 0
     g = 0                                          #g0 = 0
     buf = 0                                        #сбросить значение gi перед циклом
@@ -134,6 +136,7 @@ while len(T_mas) < L:
         x = (-1/k)*math.log(r)                      #xi = (-1/лямбда)*ln(ri)
         x_mas.append(x)
         delta = math.log(k1/k0)-(k1-k0)*x           #deltagi = ln(лямбда1/лямбда0) - (лямбда1-лямбда0)*xi
+        delta_mas.append(delta)
         buf = mas[-1] + delta                       #gi = g(i-1)+deltagi
         if buf >= 0:                                #условие добавления в список
             mas.append(buf)
@@ -153,9 +156,11 @@ while len(T_mas) < L:
     summx2 = summx2 + T**2
     r_mas.insert(0,0)
     x_mas.insert(0,0)
+    delta_mas.insert(0,0)
     data = {
         'Ravn': r_mas,
         'Exp': x_mas,
+        'Delta': delta_mas,
         'Resh': mas_buf
     }
     df = pd.DataFrame(data)
@@ -191,6 +196,7 @@ file.write(q_grade_out)
 
 #=====================================================================================
 file.close()
+input('Нажмите Enter чтобы завершить программу...')
 
 
 
