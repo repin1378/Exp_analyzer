@@ -91,6 +91,10 @@ git pull
 git pull origin test
 git push
 
+=================Преобразовать в exe===============================
+pip install auto-py-to-exe
+auto-py-to-exe
+
 
 
 
